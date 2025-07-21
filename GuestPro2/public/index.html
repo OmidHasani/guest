@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>دسته‌بندی مهمان‌ها</title>
+<style>
+    body {
+      font-family: Tahoma, sans-serif;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f7fafc;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      color: #1e293b;
+    }
+    .cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+      width: 200px;
+      padding: 25px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      user-select: none;
+      border-top-width: 10px !important;
+      border-top-style: solid;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      color: #1e293b;
+    }
+    .guest-count {
+      font-size: 0.8rem;
+      color: #475569;
+    }
+    .back-btn {
+      background: #2563eb;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 25px;
+    }
+    .guest-list {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+    }
+    .guest-list h2 {
+      margin-bottom: 20px;
+      color: #1e293b;
+      font-weight: 700;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+/* اصلاح ارتفاع و چینش آیتم لیست مهمان‌ها */
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* فاصله اسم و برند */
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #f1f5f9;
+  font-size: 1.1rem;
+  user-select: none;
+  box-shadow: inset 0 0 5px #e2e8f0;
+  direction: rtl;
+}
+
+
+    li.present {
+      background: #bbf7d0;
+      color: #14532d;
+      font-weight: 700;
+      box-shadow: inset 0 0 8px #22c55e;
+    }
+
+
+    /* 📱 ریسپانسیو برای موبایل */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .card {
+        width: 100%;
+        max-width: 100%;
+      }
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      input[type="text"] {
+        width: 90% !important;
+        font-size: 0.95rem !important;
+      }
+      .guest-list h2 {
+        font-size: 1.1rem;
+      }
+
+.guest-brand {
+  font-weight: 500;
+  color: #0f172a;
+  font-size: 1.1rem;
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.guest-name {
+  font-weight: normal;
+  color: #0f172a;
+  text-align: right;
+  min-width: 80px; /* حداقل عرض برای نام */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>دسته‌بندی مهمان‌ها</h1>
+
+  <!-- 🔍 باکس جستجو -->
+  <div style="margin-bottom: 30px; text-align: center;">
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="جستجوی مهمان..." 
+      style="padding: 10px 15px; font-size: 1rem; width: 80%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px;" 
+    />
+  </div>
+
+  <!-- نتایج جستجو -->
+  <div id="searchResults" style="display: none;"></div>
+
+  <!-- دسته‌بندی‌ها -->
+  <div id="categoriesView" class="cards"></div>
+
+  <!-- نمایش مهمان‌های یک دسته -->
+  <div id="guestListView" style="display:none;">
+    <button class="back-btn" id="backBtn">بازگشت به دسته‌بندی‌ها</button>
+    <div class="guest-list">
+      <h2 id="guestListTitle"></h2>
+      <ul id="guestList"></ul>
+    </div>
+  </div>
+
+<script>
+  let categories = {};
+  const categoryColors = {
+    "تبلیغات، بازاریابی، برندینگ و روابط عمومی": "#0f172a", // سرمه‌ای
+    "ابزارهای دیجیتال، اپراتور، زیر ساخت و اپ استور": "#ef4444", // قرمز
+    "فینتک، BNPL، صرافی و کریپتو": "#000000", // مشکی
+    "سرمایه‌گذاری، فضای کار، شتابدهنده، آموزش، مشاوره مدیریت و رویداد": "#7c3aed", // قهوه‌ای
+    "رسانه، آموزش، کودک و نوجوان، سرگرمی، VOD و AOD": "#f97316", // نارنجی
+    "سلامت، زیبایی، مد، پوشاک و سبک زندگی": "#ec4899", // صورتی
+    "گردشگری، هتلداری، مهاجرت و ویزا": "#eab308", // زرد
+    "فودتک، غذایی و نوشیدنی (FMCG)": "#86efac", // سبز کمرنگ
+    "حمل و نقل و خودرویی": "#3b82f6", // آبی
+    "فروشگاه، مارکت‌پلیس و تخفیف گروهی": "#16a34a", // سبز پررنگ
+    "سایر (منابع انسانی، بازرگانی، کارخانجات، ماشین‌آلات، استودیو، خیریه و اجتماعی)": "#f9fafb" // سفید
+  };
+
+  let currentView = 'categories';  // حالت فعلی صفحه: دسته‌بندی‌ها یا لیست مهمان‌ها
+  let currentCategory = null;       // دسته فعلی انتخاب شده برای نمایش مهمان‌ها
+
+  // دریافت داده‌ها و به‌روزرسانی UI بر اساس حالت فعلی
+  async function fetchCategories() {
+    const res = await fetch('/api/categories');
+    categories = await res.json();
+
+    // اختصاص رنگ‌ها به هر دسته بر اساس نام
+    for (const key in categories) {
+      categories[key].color = categoryColors[key] || '#888'; // رنگ پیش‌فرض در صورت نبود رنگ اختصاصی
+    }
+
+    if (currentView === 'categories') {
+      renderCategories();
+      if (searchInput.value.trim()) {
+        searchInput.oninput();
+      }
+    } else if (currentView === 'guestList' && currentCategory) {
+      updateGuestList(currentCategory);
+    }
+  }
+
+  // رندر کارت‌های دسته‌بندی
+  function renderCategories() {
+    categoriesView.innerHTML = '';
+    guestListView.style.display = 'none';
+    searchResults.style.display = 'none';
+    categoriesView.style.display = 'flex';
+
+    for (const key in categories) {
+      const cat = categories[key];
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.borderTop = `6px solid ${cat.color}`;
+
+      const title = document.createElement('div');
+      title.className = 'card-title';
+      title.textContent = key;
+
+      const presentCount = cat.guests.filter(g => g.present).length;
+
+      const count = document.createElement('div');
+      count.className = 'guest-count';
+      count.textContent = `تعداد مهمان ها: ${presentCount}`;
+
+
+      card.appendChild(title);
+      card.appendChild(count);
+
+      card.onclick = () => showGuests(key);
+      categoriesView.appendChild(card);
+    }
+  }
+
+  // نمایش مهمان‌های یک دسته و ذخیره وضعیت فعلی
+  function showGuests(categoryKey) {
+    currentView = 'guestList';
+    currentCategory = categoryKey;
+
+    categoriesView.style.display = 'none';
+    searchResults.style.display = 'none';
+    guestListView.style.display = 'block';
+
+    guestListTitle.textContent = `مهمان‌های دسته ${categoryKey}`;
+    updateGuestList(categoryKey);
+  }
+
+  // به‌روزرسانی لیست مهمان‌ها (بدون تغییر وضعیت نمایش کلی)
+function updateGuestList(categoryKey) {
+  guestList.innerHTML = '';
+  const cat = categories[categoryKey];
+  if (!cat) return;
+
+  cat.guests
+    .filter(g => g.present)
+    .forEach(g => {
+      const li = document.createElement('li');
+      // نام و برند کنار هم وسط‌چین و جدا شده با یک فاصله
+      li.innerHTML = `
+        <span class="guest-name">${g.name}</span>
+        <span class="guest-brand">${g.brand}</span>
+      `;
+
+      li.style.borderLeft = `6px solid ${cat.color}`;
+      li.style.paddingLeft = '10px';
+      guestList.appendChild(li);
+    });
+}
+
+
+  // دکمه برگشت به دسته‌بندی‌ها
+  backBtn.onclick = () => {
+    currentView = 'categories';
+    currentCategory = null;
+
+    guestListView.style.display = 'none';
+    searchResults.style.display = 'none';
+    categoriesView.style.display = 'flex';
+  };
+
+  // جستجوی زنده در مهمان‌های حاضر
+  searchInput.oninput = () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      searchResults.style.display = 'none';
+      categoriesView.style.display = 'flex';
+      guestListView.style.display = 'none';
+      return;
+    }
+
+    const matches = [];
+    for (const key in categories) {
+      const cat = categories[key];
+      cat.guests.forEach(guest => {
+        if (
+          guest.present &&
+          (guest.name.toLowerCase().includes(query) ||
+           (guest.brand && guest.brand.toLowerCase().includes(query)))
+        ) {
+          matches.push({ name: guest.name, brand: guest.brand, category: key, color: cat.color });
+        }
+      });
+    }
+
+    renderSearchResults(matches);
+  };
+
+  // رندر نتایج جستجو
+  function renderSearchResults(guests) {
+    searchResults.innerHTML = '';
+    searchResults.style.display = 'block';
+    categoriesView.style.display = 'none';
+    guestListView.style.display = 'none';
+
+    const list = document.createElement('ul');
+    list.style.padding = '0';
+    list.style.listStyle = 'none';
+
+    guests.forEach(g => {
+      const li = document.createElement('li');
+      li.textContent = `${g.name} : ${g.brand} (${g.category})`;
+      li.style.borderLeft = `6px solid ${g.color}`;
+      li.style.padding = '12px 15px';
+      li.style.marginBottom = '10px';
+      li.style.background = '#e0f2fe';
+      li.style.borderRadius = '8px';
+      li.style.boxShadow = 'inset 0 0 6px #bae6fd';
+      list.appendChild(li);
+    });
+
+    if (guests.length === 0) {
+      const empty = document.createElement('div');
+      empty.textContent = 'مهمانی یافت نشد.';
+      empty.style.color = '#9ca3af';
+      empty.style.marginTop = '20px';
+      searchResults.appendChild(empty);
+    } else {
+      searchResults.appendChild(list);
+    }
+  }
+
+  // شروع و رفرش خودکار هر ۵ ثانیه
+  fetchCategories();
+  setInterval(fetchCategories, 5000);
+</script>
+
+</body>
+</html>

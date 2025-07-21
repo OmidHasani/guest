@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>افزودن مهمان جدید</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f0f9ff;
+      color: #1e293b;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>افزودن مهمان جدید</h1>
+
+<form id="addGuestForm">
+  <label for="name">نام:</label>
+  <input type="text" id="name" name="name" required />
+
+  <label for="brand">برند:</label>
+  <input type="text" id="brand" name="brand" required />
+
+  <label for="phone">شماره موبایل:</label>
+  <input type="tel" id="phone" name="phone" pattern="^09\d{9}$" required />
+
+  <label for="category">دسته بندی:</label>
+    <select id="category" name="category" required>
+      <option value="">انتخاب دسته بندی</option>
+      <option value="تبلیغات، بازاریابی، برندینگ و روابط عمومی">تبلیغات، بازاریابی، برندینگ و روابط عمومی</option>
+      <option value="ابزارهای دیجیتال، اپراتور، زیر ساخت و اپ استور">ابزارهای دیجیتال، اپراتور، زیر ساخت و اپ استور</option>
+      <option value="فینتک، BNPL، صرافی و کریپتو">فینتک، BNPL، صرافی و کریپتو</option>
+      <option value="سرمایه‌گذاری، فضای کار، شتابدهنده، آموزش، مشاوره مدیریت و رویداد">سرمایه‌گذاری، فضای کار، شتابدهنده، آموزش، مشاوره مدیریت و رویداد</option>
+      <option value="رسانه، آموزش، کودک و نوجوان، سرگرمی، VOD و AOD">رسانه، آموزش، کودک و نوجوان، سرگرمی، VOD و AOD</option>
+      <option value="سلامت، زیبایی، مد، پوشاک و سبک زندگی">سلامت، زیبایی، مد، پوشاک و سبک زندگی</option>
+      <option value="گردشگری، هتلداری، مهاجرت و ویزا">گردشگری، هتلداری، مهاجرت و ویزا</option>
+      <option value="فودتک، غذایی و نوشیدنی (FMCG)">فودتک، غذایی و نوشیدنی (FMCG)</option>
+      <option value="حمل و نقل و خودرویی">حمل و نقل و خودرویی</option>
+      <option value="فروشگاه، مارکت‌پلیس و تخفیف گروهی">فروشگاه، مارکت‌پلیس و تخفیف گروهی</option>
+      <option value="سایر (منابع انسانی، بازرگانی، کارخانجات، ماشین‌آلات، استودیو، خیریه و اجتماعی)">سایر (منابع انسانی، بازرگانی، کارخانجات، ماشین‌آلات، استودیو، خیریه و اجتماعی)</option>
+    </select>
+
+    <button type="submit">ثبت مهمان</button>
+  </form>
+
+<script>
+  document.getElementById('addGuestForm').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const brand = document.getElementById('brand').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const category = document.getElementById('category').value;
+
+    if (!name || !brand || !phone || !category) {
+      alert('لطفا همه فیلدها را پر کنید');
+      return;
+    }
+
+    const res = await fetch('/api/guests', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name, brand, phone, category })
+    });
+
+    if (res.ok) {
+      alert('مهمان با موفقیت ثبت شد!');
+      e.target.reset();
+    } else {
+      alert('خطا در ثبت مهمان!');
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>پنل ادمین - مدیریت مهمان‌ها</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f0f9ff;
+      color: #1e293b;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+    .search-box {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .search-box input {
+      width: 70%;
+      padding: 10px 15px;
+      font-size: 1.1rem;
+      border: 2px solid #3b82f6;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .search-box input:focus {
+      border-color: #2563eb;
+    }
+    .guest-list {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 12px rgb(59 130 246 / 0.3);
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      background: #e0e7ff;
+      user-select: none;
+      font-size: 1.15rem;
+      transition: background-color 0.3s ease;
+    }
+    li.present {
+      background: #bbf7d0;
+      color: #14532d;
+      font-weight: 700;
+      box-shadow: 0 0 8px #22c55e;
+    }
+    button.checkin-btn {
+      padding: 8px 14px;
+      background: #2563eb;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    button.checkin-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>پنل ادمین - مدیریت مهمان‌ها</h1>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="جستجوی نام مهمان..." />
+  </div>
+
+  <div class="guest-list">
+    <ul id="guestList"></ul>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const guestListEl = document.getElementById('guestList');
+    const searchInput = document.getElementById('searchInput');
+    let categories = {};
+    let allGuests = [];
+
+    function flattenGuests(data) {
+      const guests = [];
+      for (const cat in data) {
+        data[cat].guests.forEach(g => {
+          guests.push({ ...g, category: cat, color: data[cat].color });
+        });
+      }
+      return guests;
+    }
+
+    async function fetchData() {
+      const res = await fetch('/api/categories');
+      categories = await res.json();
+      allGuests = flattenGuests(categories);
+      renderList(allGuests);
+    }
+
+    function renderList(guests) {
+      guestListEl.innerHTML = '';
+      if (guests.length === 0) {
+        guestListEl.innerHTML = '<li>مهمانی یافت نشد.</li>';
+        return;
+      }
+      guests.forEach(g => {
+        const li = document.createElement('li');
+        li.style.borderLeft = `6px solid ${g.color}`;
+
+        li.textContent = `${g.name} - برند: ${g.brand} (دسته: ${g.category})`;
+
+
+        if (g.present) {
+          li.classList.add('present');
+          const span = document.createElement('span');
+          span.textContent = '✔️ حاضر';
+          li.appendChild(span);
+        } else {
+          const btn = document.createElement('button');
+          btn.className = 'checkin-btn';
+          btn.textContent = 'تیک ورود';
+          btn.onclick = () => checkIn(g.id, btn);
+          li.appendChild(btn);
+        }
+
+        guestListEl.appendChild(li);
+      });
+    }
+
+    function checkIn(guestId, btn) {
+      btn.disabled = true;
+      fetch('/api/checkin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ guestId }),
+      })
+        .then(res => res.json())
+        .then(() => fetchData())
+        .catch(() => { btn.disabled = false; });
+    }
+
+    searchInput.addEventListener('input', e => {
+      const val = e.target.value.trim().toLowerCase();
+      const filtered = allGuests.filter(g => g.name.toLowerCase().includes(val));
+      renderList(filtered);
+    });
+
+    fetchData();
+
+    const socket = io();
+    socket.on('guestCheckedIn', () => {
+      fetchData();
+    });
+  </script>
+
+</body>
+</html>
