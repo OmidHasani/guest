@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: guestPro
+    env: node
+    branch: main
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        fromEnvFile: true
+    autoDeploy: true
