@@ -3,6 +3,11 @@ services:
     name: guestPro
     env: node
     branch: main
-    buildCommand: npm install
-    startCommand: node server.js
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://Omidh:Omidhh12@guestmanager.e7c95uf.mongodb.net/?retryWrites=true&w=majority&appName=GuestManager
+      - key: PORT
+        value: 3000
     autoDeploy: true
