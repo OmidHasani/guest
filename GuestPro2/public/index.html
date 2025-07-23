@@ -5,183 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دسته‌بندی مهمان‌ها</title>
   <style>
-    /* Reset و تنظیمات پایه */
-    * {
-      box-sizing: border-box;
-    }
+  /* Reset و تنظیمات پایه */
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: "Vazir", Tahoma, sans-serif;
-      background: #f0f4f8;
-      color: #1f2937;
-      padding: 20px 15px;
-      margin: 0;
-      font-size: 1.3rem;
-      line-height: 1.6;
-    }
+body {
+  font-family: "Vazir", Tahoma, sans-serif;
+  background: #f0f4f8;
+  color: #1f2937;
+  padding: 20px 15px;
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
 
 h1 {
-  font-size: 1.4rem !important;
-  margin-bottom: 15px !important;
-  user-select: none;
   text-align: center;
-}
-
-    /* جعبه جستجو */
-#searchInput {
-  max-width: 320px !important;
-  margin: 0 auto 20px auto !important;
-  padding: 8px 12px !important;
-  font-size: 0.9rem !important;
-  border-radius: 10px !important;
-  border: 1.5px solid #94a3b8 !important;
-}
-    #searchInput:focus {
-      border-color: #2563eb;
-      outline: none;
-    }
-
-    /* دسته بندی ها */
-.cards {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important; /* 4 ستون */
-  gap: 6px !important;
-  max-width: 100% !important;
-  padding: 0 8px !important;
-  margin: 0 auto !important;
-}
-
-/* خود کارت‌ها کوچک و فشرده */
-.card {
-  padding: 6px 8px !important;
-  border-right-width: 4px !important;
-  font-size: 0.8rem !important;
-  min-height: 50px !important;
-  cursor: pointer;
+  font-size: 1.4rem; /* کوچکتر شده */
+  margin-bottom: 15px; /* کمتر شده */
+  color: #1e3a8a;
   user-select: none;
+}
+
+/* جعبه جستجو */
+#searchInput {
+  width: 100%;
+  max-width: 320px; /* کوچکتر شده */
+  margin: 0 auto 20px auto; /* کمتر شده */
+  display: block;
+  padding: 8px 12px; /* کمتر شده */
+  font-size: 0.9rem; /* کوچکتر شده */
+  border-radius: 10px;
+  border: 2px solid #94a3b8;
+  background: #fff;
+  transition: border-color 0.3s ease;
+}
+#searchInput:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* دسته بندی ها */
+.cards {
+  display: flex;
+  flex-direction: column; /* تک ستونه */
+  gap: 8px; /* فاصله کمتر */
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px; /* کمتر شده */
+  border-right: 6px solid #0ea5e9;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+  min-height: 50px; /* کوتاه‌تر */
+  font-size: 0.85rem; /* کوچکتر */
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
 
-/* عنوان کارت */
 .card-title {
-  font-size: 0.85rem !important;
-  margin-bottom: 4px !important;
+  font-weight: 700;
+  font-size: 0.85rem; /* کوچکتر */
+  color: #0f172a;
+  margin-bottom: 4px;
+  white-space: nowrap; /* جلوگیری از چندخط شدن */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.guest-count {
+  font-size: 0.7rem; /* کوچکتر */
+  color: #64748b;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* دکمه برگشت */
+.back-btn {
+  max-width: 600px;
+  margin: 25px auto 30px auto;
+  display: block;
+  background: #2563eb;
+  color: white;
+  padding: 25px 0;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease;
+}
+.back-btn:hover {
+  background-color: #1e40af;
+}
+
+/* لیست مهمان ها */
+.guest-list {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.guest-list h2 {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #1e3a8a;
+  text-align: center;
+  user-select: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: #f1f5f9;
+  border-radius: 14px;
+  padding: 14px 22px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  box-shadow: inset 0 0 6px #e2e8f0;
+  border-right: 8px solid #94a3b8;
+  height: auto;
+  max-width: 100%;
+  user-select: none;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.guest-name {
   font-weight: 700;
   color: #0f172a;
+  flex: 1;
+  text-align: right;
+  padding-left: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-    }
 
+.guest-brand {
+  font-size: 1.3rem;
+  color: #475569;
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 12px;
+}
 
-
-    .guest-count {
-      font-size: 1.1rem;
-      color: #64748b;
-    }
-
-    /* دکمه برگشت */
-    .back-btn {
-      max-width: 600px;
-      margin: 25px auto 30px auto;
-      display: block;
-      background: #2563eb;
-      color: white;
-      padding: 25px 0;
-      font-size: 1.3rem;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.25s ease;
-    }
-    .back-btn:hover {
-      background-color: #1e40af;
-    }
-
-    /* لیست مهمان ها */
-    .guest-list {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
-    }
-
-    .guest-list h2 {
-      font-size: 1.8rem;
-      margin-bottom: 24px;
-      color: #1e3a8a;
-      text-align: center;
-      user-select: none;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      background: #f1f5f9;
-      border-radius: 14px;
-      padding: 14px 22px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 1.5rem;
-      box-shadow: inset 0 0 6px #e2e8f0;
-      border-right: 8px solid #94a3b8;
-      height: auto;
-      max-width: 100%;
-      user-select: none;
-      word-break: break-word;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .guest-name {
-      font-weight: 700;
-      color: #0f172a;
-      flex: 1;
-      text-align: right;
-      padding-left: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .guest-brand {
-      font-size: 1.3rem;
-      color: #475569;
-      flex: 1;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding-right: 12px;
-    }
-
-    /* نتایج جستجو */
-    #searchResults {
-      max-width: 600px;
-      margin: 0 auto 40px auto;
-      display: none;
-    }
-    #searchResults ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+/* نتایج جستجو */
+#searchResults {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  display: none;
+}
+#searchResults ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 #searchResults li {
   white-space: normal; /* اجازه بده متن چند خطی بشه */
   overflow-wrap: break-word; /* اگر کلمه خیلی بلند بود، بشکن */
@@ -194,45 +203,43 @@ h1 {
   box-shadow: inset 0 0 6px #bae6fd;
 }
 
+#searchResults li.empty-message {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.3rem;
+  text-align: center;
+  margin-top: 30px;
+  user-select: none;
+  white-space: normal;
+}
 
-    #searchResults li.empty-message {
-      background: none;
-      border: none;
-      color: #9ca3af;
-      font-size: 1.3rem;
-      text-align: center;
-      margin-top: 30px;
-      user-select: none;
-      white-space: normal;
-    }
-
-    /* ریسپانسیو برای موبایل خیلی کوچک */
-/* ریسپانسیو برای موبایل خیلی کوچک و کوچک‌تر کردن کادرها و نمایش چند ستونه */
+/* ریسپانسیو برای موبایل خیلی کوچک */
 @media (max-width: 380px) {
-  h1 {
-    font-size: 1.1rem !important;
-    margin-bottom: 10px !important;
-  }
-  #searchInput {
-    max-width: 260px !important;
-    padding: 6px 10px !important;
-    font-size: 0.75rem !important;
-  }
-  .cards {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 4px !important;
-    padding: 0 5px !important;
+  body {
+    font-size: 1.1rem;
+    padding: 15px 10px;
   }
   .card {
-    padding: 4px 6px !important;
-    font-size: 0.7rem !important;
-    min-height: 40px !important;
+    padding: 6px 8px;
+    border-right-width: 4px;
+    font-size: 0.75rem;
+    min-height: 45px;
   }
   .card-title {
-    font-size: 0.75rem !important;
+    font-size: 0.75rem;
   }
   .guest-count {
-    font-size: 0.6rem !important;
+    font-size: 0.65rem;
+  }
+  h1 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  #searchInput {
+    max-width: 260px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
   }
 }
 
