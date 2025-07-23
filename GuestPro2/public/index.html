@@ -20,62 +20,66 @@
       line-height: 1.6;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 2.4rem;
-      margin-bottom: 30px;
-      color: #1e3a8a;
-      user-select: none;
-    }
+h1 {
+  font-size: 1.4rem !important;
+  margin-bottom: 15px !important;
+  user-select: none;
+  text-align: center;
+}
 
     /* جعبه جستجو */
-    #searchInput {
-      width: 100%;
-      max-width: 450px;
-      margin: 0 auto 35px auto;
-      display: block;
-      padding: 16px 20px;
-      font-size: 1.3rem;
-      border-radius: 14px;
-      border: 2px solid #94a3b8;
-      background: #fff;
-      transition: border-color 0.3s ease;
-    }
+#searchInput {
+  max-width: 320px !important;
+  margin: 0 auto 20px auto !important;
+  padding: 8px 12px !important;
+  font-size: 0.9rem !important;
+  border-radius: 10px !important;
+  border: 1.5px solid #94a3b8 !important;
+}
     #searchInput:focus {
       border-color: #2563eb;
       outline: none;
     }
 
     /* دسته بندی ها */
-    .cards {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+.cards {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important; /* 4 ستون */
+  gap: 6px !important;
+  max-width: 100% !important;
+  padding: 0 8px !important;
+  margin: 0 auto !important;
+}
 
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-      padding: 24px 20px;
-      border-right: 10px solid #0ea5e9;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      user-select: none;
-    }
+/* خود کارت‌ها کوچک و فشرده */
+.card {
+  padding: 6px 8px !important;
+  border-right-width: 4px !important;
+  font-size: 0.8rem !important;
+  min-height: 50px !important;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* عنوان کارت */
+.card-title {
+  font-size: 0.85rem !important;
+  margin-bottom: 4px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  color: #0f172a;
+}
     .card:hover {
       transform: translateY(-6px);
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
     }
 
-    .card-title {
-      font-weight: 800;
-      font-size: 1.6rem;
-      color: #0f172a;
-      margin-bottom: 10px;
-    }
+
 
     .guest-count {
       font-size: 1.1rem;
@@ -89,7 +93,7 @@
       display: block;
       background: #2563eb;
       color: white;
-      padding: 18px 0;
+      padding: 25px 0;
       font-size: 1.3rem;
       border: none;
       border-radius: 16px;
@@ -178,19 +182,18 @@
       padding: 0;
       margin: 0;
     }
-    #searchResults li {
-      background: #e0f2fe;
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 14px;
-      font-size: 1.4rem;
-      color: #0f172a;
-      border-right: 10px solid #2563eb !important;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      user-select: none;
-    }
+#searchResults li {
+  white-space: normal; /* اجازه بده متن چند خطی بشه */
+  overflow-wrap: break-word; /* اگر کلمه خیلی بلند بود، بشکن */
+  word-break: break-word; /* شکستن کلمات بلند */
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background: #e0f2fe;
+  border-left: 6px solid #3490dc; /* یا هر رنگی که داری */
+  border-radius: 8px;
+  box-shadow: inset 0 0 6px #bae6fd;
+}
+
 
     #searchResults li.empty-message {
       background: none;
@@ -205,51 +208,33 @@
 
     /* ریسپانسیو برای موبایل خیلی کوچک */
 /* ریسپانسیو برای موبایل خیلی کوچک و کوچک‌تر کردن کادرها و نمایش چند ستونه */
-@media (max-width: 600px) {
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    max-width: 100%;
-    padding: 0 10px;
-  }
-  
-  .card {
-    padding: 12px 10px;
-    border-right-width: 6px;
-    font-size: 1.1rem;
-  }
-  
-  .card-title {
-    font-size: 1.2rem;
-    margin-bottom: 6px;
-  }
-  
-  .guest-count {
-    font-size: 0.9rem;
-  }
-}
-
-/* اگر صفحه خیلی خیلی کوچک بود (مثلاً زیر 380px) */
 @media (max-width: 380px) {
-  body {
-    font-size: 1rem;
-    padding: 10px 8px;
+  h1 {
+    font-size: 1.1rem !important;
+    margin-bottom: 10px !important;
   }
-  
+  #searchInput {
+    max-width: 260px !important;
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+  }
+  .cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+    padding: 0 5px !important;
+  }
   .card {
-    padding: 10px 8px;
+    padding: 4px 6px !important;
+    font-size: 0.7rem !important;
+    min-height: 40px !important;
   }
-  
   .card-title {
-    font-size: 1rem;
+    font-size: 0.75rem !important;
   }
-  
   .guest-count {
-    font-size: 0.8rem;
+    font-size: 0.6rem !important;
   }
 }
-
 
   </style>
 </head>
