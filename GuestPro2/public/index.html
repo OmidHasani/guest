@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دسته‌بندی مهمان‌ها</title>
   <style>
-  /* Reset و تنظیمات پایه */
+/* Reset و تنظیمات پایه */
 * {
   box-sizing: border-box;
 }
@@ -98,14 +98,14 @@ h1 {
 /* دکمه برگشت */
 .back-btn {
   max-width: 600px;
-  margin: 25px auto 30px auto;
+  margin: 15px auto 20px auto; /* کمتر شدن فاصله بالا و پایین */
   display: block;
   background: #2563eb;
   color: white;
-  padding: 25px 0;
-  font-size: 1.3rem;
+  padding: 12px 0; /* کمتر شدن ارتفاع */
+  font-size: 1rem; /* کوچکتر شدن فونت */
   border: none;
-  border-radius: 16px;
+  border-radius: 12px; /* کمی کمتر گرد */
   cursor: pointer;
   user-select: none;
   transition: background-color 0.25s ease;
@@ -120,13 +120,12 @@ h1 {
   margin: 0 auto;
   background: #ffffff;
   border-radius: 16px;
-  padding: 20px 25px;
+  padding: 15px 20px; /* کمتر شدن padding */
   box-shadow: 0 4px 12px rgba(0,0,0,0.07);
 }
-
 .guest-list h2 {
-  font-size: 1.8rem;
-  margin-bottom: 24px;
+  font-size: 1.4rem; /* کوچکتر */
+  margin-bottom: 18px; /* کمتر */
   color: #1e3a8a;
   text-align: center;
   user-select: none;
@@ -140,15 +139,15 @@ ul {
 
 li {
   background: #f1f5f9;
-  border-radius: 14px;
-  padding: 14px 22px;
-  margin-bottom: 16px;
+  border-radius: 12px;
+  padding: 10px 16px; /* کمتر شده */
+  margin-bottom: 12px; /* کمتر شده */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.5rem;
+  font-size: 1.1rem; /* کوچکتر */
   box-shadow: inset 0 0 6px #e2e8f0;
-  border-right: 8px solid #94a3b8;
+  border-right: 6px solid #94a3b8; /* کمتر شده */
   height: auto;
   max-width: 100%;
   user-select: none;
@@ -163,21 +162,21 @@ li {
   color: #0f172a;
   flex: 1;
   text-align: right;
-  padding-left: 12px;
+  padding-left: 10px; /* کمتر شده */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .guest-brand {
-  font-size: 1.3rem;
+  font-size: 1rem; /* کوچکتر */
   color: #475569;
   flex: 1;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-right: 12px;
+  padding-right: 10px; /* کمتر شده */
 }
 
 /* نتایج جستجو */
@@ -216,30 +215,32 @@ li {
 
 /* ریسپانسیو برای موبایل خیلی کوچک */
 @media (max-width: 380px) {
-  body {
+  .back-btn {
+    padding: 10px 0;
+    font-size: 0.85rem;
+    border-radius: 10px;
+    margin: 10px auto 15px auto;
+  }
+  .guest-list {
+    padding: 12px 15px;
+  }
+  .guest-list h2 {
     font-size: 1.1rem;
-    padding: 15px 10px;
+    margin-bottom: 12px;
   }
-  .card {
-    padding: 6px 8px;
-    border-right-width: 4px;
-    font-size: 0.75rem;
-    min-height: 45px;
+  li {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    border-right: 4px solid #94a3b8;
   }
-  .card-title {
-    font-size: 0.75rem;
+  .guest-name {
+    padding-left: 6px;
+    font-size: 0.9rem;
   }
-  .guest-count {
-    font-size: 0.65rem;
-  }
-  h1 {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  #searchInput {
-    max-width: 260px;
-    padding: 6px 10px;
-    font-size: 0.75rem;
+  .guest-brand {
+    font-size: 0.85rem;
+    padding-right: 6px;
   }
 }
 
