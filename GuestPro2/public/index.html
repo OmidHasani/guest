@@ -250,13 +250,11 @@ li {
   }
 }
 .social-icons {
-  position: absolute;
-  top: 15px;
-  right: 15px;   /* بچسبه به سمت راست */
+  direction: ltr; /* این خط اضافه شد */
   display: flex;
-  flex-direction: row; /* دیگه نیازی به row-reverse نیست */
+  justify-content: flex-end; /* حالا واقعا سمت راست صفحه */
   gap: 12px;
-  z-index: 100;
+  margin-bottom: 25px;
 }
 
 .social-icons a img {
@@ -280,6 +278,9 @@ li {
 
 /* موبایل */
 @media (max-width: 480px) {
+  .social-icons {
+    margin-bottom: 60px; /* فاصله بزرگتر از تیتر در موبایل */
+  }
   .social-icons a img {
     width: 28px;
     height: 28px;
@@ -323,7 +324,7 @@ li {
 const categoryColors = {
   "تبلیغات، بازاریابی، برندینگ و روابط عمومی": "#0f172a",
   "ابزارهای دیجیتال، اپراتور، زیر ساخت و اپ استور": "#ef4444",
-  "فینتک، BNPL، صرافی و کریپتو": "#000000",
+  "فینتک، BNPL، صرافی و کریپتو": "#0c2152ff",
   "سرمایه‌گذاری، فضای کار، شتابدهنده، آموزش، مشاوره مدیریت و رویداد": "#7c3aed",
   "رسانه، آموزش، کودک و نوجوان، سرگرمی، VOD و AOD": "#f97316",
   "سلامت، زیبایی، مد، پوشاک و سبک زندگی": "#ec4899",
