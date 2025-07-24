@@ -249,10 +249,47 @@ li {
     padding-right: 6px;
   }
 }
+.social-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.social-icons a img {
+  width: 28px;
+  height: 28px;
+  filter: invert(30%) sepia(90%) saturate(500%) hue-rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover img {
+  transform: scale(1.15);
+}
+
+/* موبایل */
+@media (max-width: 480px) {
+  .social-icons a img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 
   </style>
 </head>
 <body>
+  <div class="social-icons">
+    <a href="https://t.me/+ULG-n94yRV-KPwiI" target="_blank" aria-label="تلگرام">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="تلگرام">
+    </a>
+    <a href="https://linkedin.com/company/Cafe-Ertebat" target="_blank" aria-label="لینکدین">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="لینکدین">
+    </a>
+    <a href="https://instagram.com/Cafe.Ertebat" target="_blank" aria-label="اینستاگرام">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="اینستاگرام">
+    </a>
+  </div>
 
   <h1>دسته‌بندی مهمان‌ها</h1>
 
