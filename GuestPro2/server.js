@@ -6,7 +6,7 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 const path = require('path');
 const Guest = require('./models/Guest');
-
+const Kavenegar = require('kavenegar');
 
 const app = express();
 const server = http.createServer(app);
@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 // تعریف رنگ‌های ثابت دسته‌بندی‌ها
 const CATEGORY_COLORS = {
-  "تبلیغات، بازاریابی، برندینگ و روابط عمومی": "#0f172a",
+  "تبلیغات، بازاریابی، برندینگ و روابط عمومی": "#142e6aff",
   "ابزارهای دیجیتال، اپراتور، زیر ساخت و اپ استور": "#ef4444",
   "فینتک، BNPL، صرافی و کریپتو": "#000000",
   "سرمایه‌گذاری، فضای کار، شتابدهنده، آموزش، مشاوره مدیریت و رویداد": "#6b4226",
