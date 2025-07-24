@@ -250,28 +250,39 @@ li {
   }
 }
 .social-icons {
+  position: absolute;
+  top: 15px;
+  right: 15px;   /* بچسبه به سمت راست */
   display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+  flex-direction: row; /* دیگه نیازی به row-reverse نیست */
+  gap: 12px;
+  z-index: 100;
 }
 
 .social-icons a img {
-  width: 28px;
-  height: 28px;
-  filter: invert(30%) sepia(90%) saturate(500%) hue-rotate(180deg);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
   transition: transform 0.2s ease;
 }
 
+/* رنگ‌دهی آیکن‌های SVG */
+.telegram-icon {
+  filter: invert(39%) sepia(97%) saturate(1872%) hue-rotate(183deg) brightness(94%) contrast(95%);
+}
+.linkedin-icon {
+  filter: invert(31%) sepia(97%) saturate(2073%) hue-rotate(176deg) brightness(93%) contrast(101%);
+}
+
 .social-icons a:hover img {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 
 /* موبایل */
 @media (max-width: 480px) {
   .social-icons a img {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 }
 
@@ -281,13 +292,13 @@ li {
 <body>
   <div class="social-icons">
     <a href="https://t.me/+ULG-n94yRV-KPwiI" target="_blank" aria-label="تلگرام">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="تلگرام">
+      <img class="telegram-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="تلگرام">
     </a>
     <a href="https://linkedin.com/company/Cafe-Ertebat" target="_blank" aria-label="لینکدین">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="لینکدین">
+      <img class="linkedin-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="لینکدین">
     </a>
     <a href="https://instagram.com/Cafe.Ertebat" target="_blank" aria-label="اینستاگرام">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="اینستاگرام">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="اینستاگرام">
     </a>
   </div>
 
