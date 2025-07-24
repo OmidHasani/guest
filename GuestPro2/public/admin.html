@@ -47,14 +47,10 @@
       margin: 0;
     }
     li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 12px 15px;
       margin-bottom: 12px;
       border-radius: 10px;
       background: #e0e7ff;
-      user-select: none;
       font-size: 1.15rem;
       transition: background-color 0.3s ease;
     }
@@ -64,21 +60,52 @@
       font-weight: 700;
       box-shadow: 0 0 8px #22c55e;
     }
-    button.checkin-btn {
-      padding: 8px 14px;
-      background: #2563eb;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.2s ease;
+
+
+
+  .actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  button {
+    padding: 6px 14px;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    min-width: 90px;
+  }
+  .checkin-btn {
+    background: #16a34a; /* سبز */
+  }
+  .checkin-btn:hover {
+    background: #15803d;
+  }
+  .checkout-btn {
+    background: #dc2626; /* قرمز */
+  }
+  .checkout-btn:hover {
+    background: #b91c1c;
+  }
+  @media (max-width: 600px) {
+    .actions {
+      flex-direction: column;
+      gap: 10px;
     }
-    button.checkin-btn:disabled {
-      background: #94a3b8;
-      cursor: not-allowed;
+    button {
+      width: 100%;
+      min-width: auto;
     }
-  </style>
+  }
+</style>
+
 </head>
 <body>
 
@@ -124,22 +151,29 @@
       }
       guests.forEach(g => {
         const li = document.createElement('li');
-        li.style.borderLeft = `6px solid ${g.color}`;
+        li.style.borderRight = `6px solid ${g.color}`;
+        li.innerHTML = `<div>${g.name} - برند: ${g.brand} (دسته: ${g.category})</div>`;
 
-        li.textContent = `${g.name} - برند: ${g.brand} (دسته: ${g.category})`;
+        const actions = document.createElement('div');
+        actions.className = 'actions';
 
+        const checkinBtn = document.createElement('button');
+        checkinBtn.className = 'checkin-btn';
+        checkinBtn.textContent = 'تیک ورود';
+        checkinBtn.onclick = () => checkIn(g.id, checkinBtn);
+
+        const checkoutBtn = document.createElement('button');
+        checkoutBtn.className = 'checkout-btn';
+        checkoutBtn.textContent = 'رفتن';
+        checkoutBtn.onclick = () => checkOut(g.id, checkoutBtn);
+
+        actions.appendChild(checkinBtn);
+        actions.appendChild(checkoutBtn);
+
+        li.appendChild(actions);
 
         if (g.present) {
           li.classList.add('present');
-          const span = document.createElement('span');
-          span.textContent = '✔️ حاضر';
-          li.appendChild(span);
-        } else {
-          const btn = document.createElement('button');
-          btn.className = 'checkin-btn';
-          btn.textContent = 'تیک ورود';
-          btn.onclick = () => checkIn(g.id, btn);
-          li.appendChild(btn);
         }
 
         guestListEl.appendChild(li);
@@ -149,6 +183,18 @@
     function checkIn(guestId, btn) {
       btn.disabled = true;
       fetch('/api/checkin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ guestId }),
+      })
+        .then(res => res.json())
+        .then(() => fetchData())
+        .catch(() => { btn.disabled = false; });
+    }
+
+    function checkOut(guestId, btn) {
+      btn.disabled = true;
+      fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ guestId }),
