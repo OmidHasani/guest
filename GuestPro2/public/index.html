@@ -78,13 +78,17 @@ h1 {
 
 .card-title {
   font-weight: 700;
-  font-size: 0.85rem; /* کوچکتر */
+  font-size: 0.85rem;
   color: #0f172a;
   margin-bottom: 4px;
-  white-space: nowrap; /* جلوگیری از چندخط شدن */
+  /* این سه خط رو حذف کن */
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
+  white-space: normal;   /* متن چند خطی بشه */
+  line-height: 1.4;      /* فاصله بین خطوط بهتر */
 }
+
 
 .guest-count {
   font-size: 0.7rem; /* کوچکتر */
