@@ -102,18 +102,20 @@ h1 {
 /* دکمه برگشت */
 .back-btn {
   max-width: 600px;
-  margin: 15px auto 20px auto; /* کمتر شدن فاصله بالا و پایین */
+  margin: 15px auto 20px auto;
   display: block;
   background: #2563eb;
   color: white;
-  padding: 12px 0; /* کمتر شدن ارتفاع */
-  font-size: 1rem; /* کوچکتر شدن فونت */
+  padding: 12px 20px; /* ← اینجا مقدار افقی اضافه شد (قبلاً فقط بالا و پایین بود) */
+  font-size: 1rem;
   border: none;
-  border-radius: 12px; /* کمی کمتر گرد */
+  border-radius: 12px;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.25s ease;
+  text-align: center; /* متن وسط بمونه */
 }
+
 .back-btn:hover {
   background-color: #1e40af;
 }
